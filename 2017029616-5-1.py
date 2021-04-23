@@ -2,7 +2,7 @@ import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
-
+import math
 def drawFrame(): 
     glBegin(GL_LINES) 
     glColor3ub(255, 0, 0) 
@@ -85,11 +85,20 @@ def myLookAt(eye, at, up):
                   [x[1], y[1], z[1], 0],
                   [x[2], y[2], z[2], 0],
                   [pos[0], pos[1], pos[2], 1]]))
+    '''
+    glTranslate(eye[0], eye[1], eye[2])
+    lookvec = at - eye
+    arr =np.cross(np.array([0,0,-1]), eye)
+    temp = np.dot(np.array([0,0,-1]),arr)
+    temp = temp / np.sqrt(np.dot(arr, arr))
+    angle = math.acos(temp)
+    glRotatef(0, arr[0], arr[1], arr[2])
+    '''
 
 def main():
     if not glfw.init():
         return
-    window = glfw.create_window(480, 480, "2017029616-5-1", None, None)
+    window = glfw.create_window(1000, 480, "2017029616-5-1", None, None)
     if not window:
         glfw.terminate()
         return
